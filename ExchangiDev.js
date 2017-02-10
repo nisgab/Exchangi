@@ -2,7 +2,7 @@ var TelegramBot = require('node-telegram-bot-api');
 var rp = require('request-promise');
 var schedule = require('node-schedule');
 
-var token = '323882318:AAHBLbKiTKTfBY-tG0RkiJldYufiucKROWE';
+var token = '350677624:AAEawDrTMsOSvPidgTv24M-nGBBCts0dbuE';
 
 const shekel = "שקל";
 const cm = "סמ";
@@ -91,4 +91,3 @@ function sendMessage(chatId, amount, rate, desc){
     var resp = (amount / rate).toFixed(3) + " " + desc;
     bot.sendMessage(chatId, resp);
 }
-
