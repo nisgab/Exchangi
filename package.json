@@ -4,6 +4,7 @@
   "description": "An exchanging bot",
   "main": "Exchangi.js",
   "dependencies": {
+    "jsonfile": "^2.4.0",
     "node-schedule": "^1.2.0",
     "node-telegram-bot-api": "^0.26.0",
     "request-promise": "^4.1.1"
@@ -11,7 +12,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node Exchangi.js --use_strict"
+    "start": "node Exchangi.js --use_strict"
   },
   "author": "Nissan Gabay",
   "license": "ISC"
