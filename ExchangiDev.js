@@ -12,12 +12,14 @@ const shekel = "שקל";
 const cm = "סמ";
 const km = "קמ";
 const kilo = "קילו";
+const gram = "גרם";
 const mileToKM = 1 / 1.60934;
 const intchToCM = 0.393701;
 const pountToKilo = 1/0.453592;
 
-const simpleExchangeRegex = /([0-9]*\.[0-9]+|[0-9]+)\s+([\u0590-\u05FF]+)/;
+const simpleExchangeRegex = /([0-9]*\.[0-9]+|[0-9]+)\s+([\u0590-\u05FF]+\s*[\u0590-\u05FF]+\s*[\u0590-\u05FF]+)/;
 const startCommand = /\/start/;
+const bakingRegex = /(כף.*|כפית.*|כוס.*)/;
 
 var rateDictionary = {};
 var userLogs = {};
@@ -57,6 +59,26 @@ function buildDictionary(rates){
     rateDictionary["אינץ"] = getRateObj(intchToCM, cm);
     rateDictionary["מייל"] = getRateObj(mileToKM, km);
     rateDictionary["פאונד"] = getRateObj(pountToKilo, kilo);
+
+    rateDictionary["כוס סוכר"] = getRateObj(1/200, gram);
+    rateDictionary["כוסות סוכר"] = getRateObj(1/200, gram);
+    rateDictionary["כפית סוכר"] = getRateObj(1/5, gram);
+    rateDictionary["כפיות סוכר"] = getRateObj(1/5, gram);
+    rateDictionary["כף סוכר"] = getRateObj(1/12, gram);
+    rateDictionary["כפות סוכר"] = getRateObj(1/12, gram);
+    
+    rateDictionary["כוס מלח"] = getRateObj(1/250, gram);
+    rateDictionary["כוסות מלח"] = getRateObj(1/250, gram);
+    rateDictionary["כפית מלח"] = getRateObj(1/6, gram);
+    rateDictionary["כפיות מלח"] = getRateObj(1/6, gram);
+    rateDictionary["כף מלח"] = getRateObj(1/20, gram);
+    rateDictionary["כפות מלח"] = getRateObj(1/20, gram);
+
+    rateDictionary["כוס קמח"] = getRateObj(1/140, gram);
+    rateDictionary["כוסות קמח"] = getRateObj(1/140, gram);
+    rateDictionary["כף קמח"] = getRateObj(1/10, gram);
+    rateDictionary["כפות קמח"] = getRateObj(1/10, gram);
+
 }
 
 function getRateObj(rate, postfix){
@@ -107,6 +129,16 @@ bot.on('text', function (msg) {
     else if(startCommand.test(msg.text)){
         handleStartCommand(msg);
     }
+    else if(bakingRegex.test(msg.text)){
+        var match = bakingRegex.exec(msg.text);
+        console.log(match)
+        var newMatch=[];
+        newMatch.push(1);
+        newMatch.push(1);
+        newMatch.push(match[1]);
+
+        handleSimpleExchange(msg, newMatch);
+    }
     else {
         bot.sendMessage(20310797 , `Got new undefiend text '${msg.text}'`);
         bot.sendMessage(chatId, "כרגע אני לא יודע מה לעשות עם זה, אני אשתפר בהמשך, מבטיח :)");
@@ -126,6 +158,7 @@ function handleStartCommand(msg){
 
 function handleSimpleExchange(msg, match){
 
+    console.log(match[2]);
     var rate = rateDictionary[match[2]];
 
     if (rate){
