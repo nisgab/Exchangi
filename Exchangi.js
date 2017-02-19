@@ -55,12 +55,6 @@ function buildDictionary(rates){
     rateDictionary["לירה"] = getRateObj(rates.GBP, shekel);
     rateDictionary["לישט"] = getRateObj(rates.GBP, shekel);
     rateDictionary["ליסט"] = getRateObj(rates.GBP, shekel);
-    rateDictionary["קורונות"] = getRateObj(rates.CZK, shekel);
-    rateDictionary["קורונה"] = getRateObj(rates.CZK, shekel);
-    rateDictionary["קרונות"] = getRateObj(rates.CZK, shekel);
-    rateDictionary["קרונה"] = getRateObj(rates.CZK, shekel);
-    
-    
     rateDictionary["אינטש"] = getRateObj(intchToCM, cm);
     rateDictionary["אינץ"] = getRateObj(intchToCM, cm);
     rateDictionary["מייל"] = getRateObj(mileToKM, km);
